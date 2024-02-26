@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      h1 {
+        width: 100px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script>
+      // DyreListe - loops, arrays
+      // Du skal vise frem enten Hund, Katt eller Esel i en div når du trykker på en knapp "Random animal". Lag et inputfelt og en knapp til der du kan legge til flere dyr som kan dukke opp i diven når du trykker på knappen "Random animal". Lag også en knapp "Show all animals" som viser frem alle dyrene i en liste og endrer knappeteksten til "Hide all animals" når du trykker på den en gang til for å skjule dyrelisten fra viewet.
+
+      let animal = ["cat", "dog", "elephant"];
+      let randomAnimal = "";
+      let newAnimal;
+      let list = "All animals : ";
+      let isHidden = true;
+      generateView();
+      function generateView() {
+        const app = document.querySelector("#root");
+        app.innerHTML =
+          /*HTML*/
+          `
+        <div>
+            <h1>${randomAnimal}</h1>
+            <button onclick="showrandomAnimal()">show random animal</button><br>
+            <input onchange="newAnimal = this.value"  type="text" placeholder="enter animal name" />
+            <button onclick="addAnimal()" >Add animal</button><br>
+            ${
+              isHidden
+                ? `<button onclick="showAllAnimals()">show all animals</button>`
+                : `<button onclick="hideAllAnimals()">hide all animals</button>`
+            }
+
+           <br>
+
+            <ul>
+             ${isHidden ? "" : list}
+              </ul>
+        </div>
+        `;
+      }
+      function getRandomAnimal() {
+        return Math.floor(Math.random() * animal.length);
+      }
+
+      function showrandomAnimal() {
+        randomAnimal = animal[getRandomAnimal()];
+        generateView();
+      }
+
+      function addAnimal() {
+        animal.push(newAnimal);
+        console.log(newAnimal, " added");
+        document.querySelector("input").value = "";
+      }
+      function showAllAnimals() {
+        for (let i = 0; i < animal.length; i++) {
+          list += `</span><li>${animal[i]}</li>`;
+        }
+        isHidden = false;
+        generateView();
+        list = "All animals : ";
+      }
+
+      function hideAllAnimals() {
+        isHidden = true;
+        generateView();
+      }
+    </script>
+  </body>
+</html>
